@@ -15,10 +15,12 @@ class advisors(models.Model):
 
     def save(self, *args, **kwargs):
         if self.photo_url and not self.image_file:
-            img_temp = NamedTemporaryFile(delete=True)
-            img_temp.write(urlopen(self.photo_url).read())
-            img_temp.flush()
-            self.image_file = self.image_file.save(f"image_{self.pk}", File(img_temp))
+            result = urllib.request.urlretrieve(self.photo_url)
+            self.image_file.save(
+                os.path.basename(self.photo_url),
+                File(open(result[0],'rb')),
+                save = False
+            )
         super(advisors, self).save(*args, **kwargs)
 
 class Users(models.Model):
