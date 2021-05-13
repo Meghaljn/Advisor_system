@@ -5,11 +5,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.contrib.auth import login
 
-#
-# from rest_framework import permissions
-# from rest_framework import response, decorators, permissions, status
-# from rest_framework_simplejwt.tokens import RefreshToken
-#
+
 from .models import advisors,booking
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -98,46 +94,4 @@ class LoginAPI(KnoxLoginView):
             "user_id" : user.id,
             "token" : AuthToken.objects.create(user)[1]
         })
-        #return super(LoginAPI, self).post(request, format=None)
-
-# def registration (request):
-#     if request.method == 'POST':
-#         serializer = usersSerializer(data=request.data)
-#         if not serializer.is_valid():
-#             return JsonResponse(serializer.errors, status =status.HTTP_400_BAD_REQUEST)
-#         user = serializer.save()
-#         refresh = RefreshToken.for_user(user)
-#         res = {
-#             "refresh": str(refresh),
-#             "access": str(refresh.access_token),
-#         }
-#         return JsonResponse(res, status = status.HTTP_201_CREATED)
-
-
-# def authenticate_user(request):
-#     try:
-#         email = request.data['email']
-#         password = request.data['password']
-#
-#         user = users.objects.get(email=email, password=password)
-#         if user:
-#             try:
-#                 payload = jwt_payload_handler(user)
-#                 token = jwt.encode(payload, settings.SECRET_KEY)
-#                 user_details = {}
-#                 user_details['name'] = "%s %s" % (
-#                     user.first_name, user.last_name)
-#                 user_details['token'] = token
-#                 user_logged_in.send(sender=user.__class__,
-#                                     request=request, user=user)
-#                 return Response(user_details, status=status.HTTP_200_OK)
-#
-#             except Exception as e:
-#                 raise e
-#         else:
-#             res = {
-#                 'error': 'can not authenticate with the given credentials or the account has been deactivated'}
-#             return Response(res, status=status.HTTP_403_FORBIDDEN)
-#     except KeyError:
-#         res = {'error': 'please provide a email and a password'}
- #       return Response(res)
+       
